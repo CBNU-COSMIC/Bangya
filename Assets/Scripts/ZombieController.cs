@@ -106,6 +106,14 @@ public class ZombieController : MonoBehaviour
         }
     }
 
+    /*
+     * <개조한 코드>
+     * target(플레이어) 와의 거리를 구한다.
+     * 일정 거리 (게임상에서 몬스터가 플레이어 인식) 미만에서
+     * 타겟까지의 방향을 구한다.
+     * 그 후에 타겟을 바라보게 회전하고 그 방향으로 계속 움직인다.
+     * 마지막으로는 움직이는 애니메이션을 재생한다.
+     */
     private void Targeting()
     {
         float rotationSpeed = 3.0f;
@@ -113,7 +121,7 @@ public class ZombieController : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-        if (distanceToTarget < minDistance)
+        if (distanceToTarget <= minDistance)
         {
             Vector3 directionToTarget = target.position - transform.position;
             Quaternion rotationToTarget = Quaternion.LookRotation(directionToTarget);
