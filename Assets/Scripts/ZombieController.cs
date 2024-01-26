@@ -61,8 +61,8 @@ public class ZombieController : MonoBehaviour
                 break;
         }
 
-        nav.SetDestination(target.position);
-        nav.speed = m_moveSpeed;
+        //nav.SetDestination(target.position);
+        //nav.speed = m_moveSpeed;
     }
 
     private void TankUpdate()
