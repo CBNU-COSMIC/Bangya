@@ -127,12 +127,13 @@ public class PlayerController : MonoBehaviour
             applySpeed = _walkSpeed;
         }
     }
-    void Jump() //점프가 가능한 상태인지 체크
+    void Jump()
     {
         // GetKeyDown = 한번만
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround) //점프가 가능한 상태인지 체크
         {
             myRigid.velocity = transform.up * _jumpPower;
+            Debug.Log($"공중에 떴다.{isGround}");
             _anim.SetBool("IsJump", true);
         }
     }
