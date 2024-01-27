@@ -2,20 +2,20 @@
 
 namespace SlimUI.ModernMenu{
     public class ExtraLinks : MonoBehaviour{
-        public void CCP(){
-            Application.OpenURL("http://u3d.as/1JZG");
+        public void VisitBokob(){
+            Application.OpenURL("https://github.com/bokob");
         }
 
-        public void SciFi(){
-            Application.OpenURL("http://u3d.as/1AaR");
+        public void VisitStarsaverKDH(){
+            Application.OpenURL("https://github.com/starsaverKDH");
         }
 
-        public void Clean1(){
-            Application.OpenURL("http://u3d.as/1hTi");
+        public void VisitGAUDUL(){
+            Application.OpenURL("https://github.com/GAUDUL");
         }
 
-        public void Essence(){
-            Application.OpenURL("http://u3d.as/1t11");
+        public void VisitCOSMIC(){
+            Application.OpenURL("https://github.com/CBNU-COSMIC");
         }
     }
 }
