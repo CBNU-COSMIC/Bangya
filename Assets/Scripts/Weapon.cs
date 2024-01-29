@@ -96,7 +96,7 @@ public class Weapon : MonoBehaviour
 
     void Reload()
     {
-            GetComponent<Animator>().SetTrigger("reload"); //장전 애니
+            GetComponent<Animator>().SetTrigger("reload"); //장전 모션
             int AddBullet = _maxBullet - Bullet;
             if (AddBullet > _haveBullet)
             {
@@ -106,7 +106,7 @@ public class Weapon : MonoBehaviour
             }
             _haveBullet -= AddBullet;
             Bullet += AddBullet;
-            Invoke("IdleTrigger", 1.8f); //원래 상태로
+            Invoke("IdleTrigger", 1.5f); //원래 상태로
     }
 
     void HitEffect(RaycastHit hit)
