@@ -47,7 +47,7 @@ Transform target;
         var curAnimStateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
         // 애니메이션 이름이 IdleNormal 이 아니면 Play
-        if (curAnimStateInfo.IsName("IdleNoral") == false)
+        if (curAnimStateInfo.IsName("IdleNormal") == false)
             anim.Play("IdleNormal", 0, 0);
 
         // 몬스터가 Idle 상태일 때 두리번 거리게 하는 코드
