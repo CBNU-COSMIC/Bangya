@@ -8,14 +8,20 @@ namespace SlimUI.ModernMenu{
 	public class UIMenuManager : MonoBehaviour {
 		private Animator CameraObject;
 
-		// campaign button sub menu
+		// 게임 플레이어 관련
+		[Header("Game Play")]
+		public GameObject _player;
+		public GameObject _playerCamera;
+		public GameObject _gameUI;
+
+        // campaign button sub menu
         [Header("MENUS")]
         [Tooltip("The Menu for when the MAIN menu buttons")]
         public GameObject mainMenu;
         [Tooltip("THe first list of buttons")]
         public GameObject firstMenu;
-        [Tooltip("The Menu for when the PLAY button is clicked")]
-        public GameObject playMenu;
+        //[Tooltip("The Menu for when the PLAY button is clicked")]
+        //public GameObject playMenu;
         [Tooltip("The Menu for when the EXIT button is clicked")]
         public GameObject exitMenu;
         [Tooltip("Optional 4th Menu")]
@@ -83,7 +89,7 @@ namespace SlimUI.ModernMenu{
 		void Start(){
 			CameraObject = transform.GetComponent<Animator>();
 
-			playMenu.SetActive(false);
+			//playMenu.SetActive(false);
 			exitMenu.SetActive(false);
 			if(extrasMenu) extrasMenu.SetActive(false);
 			firstMenu.SetActive(true);
@@ -120,18 +126,36 @@ namespace SlimUI.ModernMenu{
 		public void PlayCampaign(){
 			exitMenu.SetActive(false);
 			if(extrasMenu) extrasMenu.SetActive(false);
-			playMenu.SetActive(true);
+			//playMenu.SetActive(true);
 		}
 		
 		public void PlayCampaignMobile(){
 			exitMenu.SetActive(false);
 			if(extrasMenu) extrasMenu.SetActive(false);
-			playMenu.SetActive(true);
+			//playMenu.SetActive(true);
 			mainMenu.SetActive(false);
 		}
 
+		/*
+		 플레이 하면 UI 카메라 끈다.
+		 */
+		public void Play()
+		{
+            exitMenu.SetActive(false);
+            if (extrasMenu) extrasMenu.SetActive(false);
+            //playMenu.SetActive(true);
+            mainMenu.SetActive(false);
+
+			_gameUI.SetActive(true);
+			_player.SetActive(true);
+			gameObject.GetComponent<Camera>().enabled = false;
+			_playerCamera.SetActive(true);
+			_playerCamera.GetComponent<Camera>().enabled = true;
+
+        }
+
 		public void ReturnMenu(){
-			playMenu.SetActive(false);
+			//playMenu.SetActive(false);
 			if(extrasMenu) extrasMenu.SetActive(false);
 			exitMenu.SetActive(false);
 			mainMenu.SetActive(true);
@@ -143,20 +167,22 @@ namespace SlimUI.ModernMenu{
 			}
 		}
 
-		public void  DisablePlayCampaign(){
-			playMenu.SetActive(false);
-		}
+        //public void  DisablePlayCampaign(){
+        //	playMenu.SetActive(false);
+        //}
 
-		public void Position2(){
-			DisablePlayCampaign();
+        #region UI 메뉴 이동 애니메이션 관련
+        public void Position2(){
+			//DisablePlayCampaign();
 			CameraObject.SetFloat("Animate",1);
 		}
 
 		public void Position1(){
 			CameraObject.SetFloat("Animate",0);
 		}
+        #endregion
 
-		void DisablePanels(){
+        void DisablePanels(){
 			PanelControls.SetActive(false);
 			PanelVideo.SetActive(false);
 			PanelGame.SetActive(false);
@@ -175,7 +201,8 @@ namespace SlimUI.ModernMenu{
 			lineGeneral.SetActive(false);
 		}
 
-		public void GamePanel(){
+        #region Setting 메뉴 관련 함수
+        public void GamePanel(){
 			DisablePanels();
 			PanelGame.SetActive(true);
 			lineGame.SetActive(true);
@@ -220,6 +247,7 @@ namespace SlimUI.ModernMenu{
 			PanelGeneral.SetActive(true);
 			lineGeneral.SetActive(true);
 		}
+		#endregion
 
 		public void PlayHover(){
 			hoverSound.Play();
@@ -237,18 +265,18 @@ namespace SlimUI.ModernMenu{
 		public void AreYouSure(){
 			exitMenu.SetActive(true);
 			if(extrasMenu) extrasMenu.SetActive(false);
-			DisablePlayCampaign();
+			//DisablePlayCampaign();
 		}
 
 		public void AreYouSureMobile(){
 			exitMenu.SetActive(true);
 			if(extrasMenu) extrasMenu.SetActive(false);
 			mainMenu.SetActive(false);
-			DisablePlayCampaign();
+			//DisablePlayCampaign();
 		}
 
 		public void ExtrasMenu(){
-			playMenu.SetActive(false);
+			//playMenu.SetActive(false);
 			if(extrasMenu) extrasMenu.SetActive(true);
 			exitMenu.SetActive(false);
 		}
