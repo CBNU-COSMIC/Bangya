@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,20 +14,22 @@ public class Weapon : MonoBehaviour
     [SerializeField] float _range = 30f;  //총 범위
     [SerializeField] int _maxBullet = 10; //최대 탄환 수
     [SerializeField] int _haveBullet = 100; //가지고 있는 탄환 수
-    int Bullet = 10; //초기값
+    [SerializeField] float _fireRate = 0.2f;  // 발사 간격
+    [SerializeField] int _bullet = 10; //확인용
     bool IsAiming = false;
     bool IsReloading = false;
+    float NextFireTime = 0f; //다음 발사
 
     void Start()
     {
-        Bullet = _maxBullet;
+        _bullet = _maxBullet;
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1")) //발사
+        if (Input.GetButton("Fire1")&&Time.time>=NextFireTime) //발사
         {
-            if (Bullet <= 0) //총알 없음
+            if (_bullet <= 0) //총알 없음
             {
                 Debug.Log("No Bullet");
                 return;
@@ -44,7 +47,7 @@ public class Weapon : MonoBehaviour
                     Debug.Log("No Bullet");
                     return;
                 }
-                if (Bullet == _maxBullet) //이미 꽉 참
+                if (_bullet == _maxBullet) //이미 꽉 참
                 {
                     Debug.Log("It's full");
                     return;
@@ -61,11 +64,12 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
-            _gunEffect.Play();
-            Fire(); //진짜 발사
-            GetComponent<Animator>().SetTrigger("recoil"); //반동 애니
-            Bullet--;
-            Invoke("RecoilToIdleTrigger", 0.5f); //원래 상태로
+        _gunEffect.Play();
+        Fire(); //진짜 발사
+        GetComponent<Animator>().SetTrigger("recoil"); //반동 애니
+        _bullet--;
+        Invoke("RecoilToIdleTrigger", 0.5f); //원래 상태로
+        NextFireTime = Time.time +_fireRate;
     }
     void Fire()
     {
@@ -97,15 +101,15 @@ public class Weapon : MonoBehaviour
     void Reload()
     {
             GetComponent<Animator>().SetTrigger("reload"); //장전 모션
-            int AddBullet = _maxBullet - Bullet;
+            int AddBullet = _maxBullet - _bullet;
             if (AddBullet > _haveBullet)
             {
-                Bullet += _haveBullet;
+                _bullet += _haveBullet;
                 _haveBullet = 0;
                 return;
             }
             _haveBullet -= AddBullet;
-            Bullet += AddBullet;
+            _bullet += AddBullet;
             Invoke("IdleTrigger", 1.5f); //원래 상태로
     }
 
