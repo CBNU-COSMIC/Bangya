@@ -78,9 +78,9 @@ public class PlayerController : MonoBehaviour
         Vector3 origin = transform.position;
         Vector3 direction = Vector3.down;
         float maxRayDistance = 0.1f;
-        
+
         Debug.DrawRay(origin, direction * maxRayDistance, Color.red);
-        
+
         RaycastHit hit;
         if (Physics.Raycast(origin, direction, out hit, maxRayDistance))
         {

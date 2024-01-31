@@ -2,107 +2,129 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public float sensitivity = 2.0f; // 마우스 감도
-    //public Transform playerBody; // 플레이어 캐릭터의 Transform
+    [SerializeField] GameObject _hitEffect;
+    [SerializeField] GameObject _player;
+    [SerializeField] Camera _fpsCamera;
+    [SerializeField] ParticleSystem _gunEffect;
+    [SerializeField] float _damage = 30f; //총 위력
+    [SerializeField] float _range = 30f;  //총 범위
+    [SerializeField] int _maxBullet = 10; //최대 탄환 수
+    [SerializeField] int _haveBullet = 100; //가지고 있는 탄환 수
+    [SerializeField] float _fireRate = 0.2f;  // 발사 간격
+    [SerializeField] int _bullet = 10; //확인용
+    bool IsAiming = false;
+    bool IsReloading = false;
+    float NextFireTime = 0f; //다음 발사
 
-    float rotationX = 0f;
-
-    void RotateGunAndPlayer()
+    void Start()
     {
-        // 마우스 입력 감지
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity;
-
-        // 플레이어 캐릭터를 수평으로 회전
-        //playerBody.Rotate(Vector3.up * mouseX);
-
-        // 마우스 입력 감지
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
-
-        // 수직 회전 값 갱신
-        rotationX -= mouseY;
-        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
-
-        // 총구를 수직으로 회전
-        shootPoint.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+        _bullet = _maxBullet;
     }
 
-    /// <summary>
-    /// ///////////////
-    /// </summary>
-
-    // Weapon Specification
-    public string weaponName;
-    public int bulletsPerMag;
-    public int bulletsTotal;
-    public int currentBullets;
-    public float range;
-    public float fireRate;
-
-    // Parameters
-    private float fireTimer = 0;
-
-    // References
-    public Transform shootPoint;
-    public ParticleSystem muzzleFlash;
-    private Animator anim;
-
-    // Sound
-    public AudioClip shootSound;
-    public AudioSource audioSource;
-
-    // Use this for initialization
-    private void Start()
+    void Update()
     {
-        currentBullets = bulletsPerMag;
-        //anim = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        // 마우스 움직임을 감지하여 총구와 플레이어를 회전
-        RotateGunAndPlayer();
-
-        Debug.DrawRay(shootPoint.position, transform.forward*100, Color.blue);
-
-        RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, shootPoint.transform.forward, out hit, range))
+        if (Input.GetButton("Fire1")&&Time.time>=NextFireTime) //발사
         {
-            if (hit.collider.CompareTag("Monster"))
+            if (_bullet <= 0) //총알 없음
             {
-                Debug.Log("나이스샷");
+                Debug.Log("No Bullet");
+                return;
             }
+            if (!IsReloading) Shoot(); //발사
+            else return;
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            if (currentBullets > 0)
-                Fire();
-        }
+        else if (Input.GetButtonDown("Fire2")) Aim();  //조준
 
-        if (fireTimer < fireRate)
-        {
-            fireTimer += Time.deltaTime;
+        else if (Input.GetKeyDown(KeyCode.R)) //장전
+         {
+                if (_haveBullet <= 0) //남은 탄환 없음
+                {
+                    Debug.Log("No Bullet");
+                    return;
+                }
+                if (_bullet == _maxBullet) //이미 꽉 참
+                {
+                    Debug.Log("It's full");
+                    return;
+                }
+                Debug.Log("Reloading");
+                if (!IsReloading)
+                {
+                    IsReloading = true;
+                    Reload();
+                }
+                else return;
         }
     }
 
-    private void Fire()
+    void Shoot()
     {
-        if (fireTimer < fireRate)
-        {
-            return;
-        }
-        Debug.Log("Shot Fired!");
-        Debug.DrawRay(shootPoint.position, Vector3.forward, Color.red);
-        RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, shootPoint.transform.forward, out hit, range))
-        {
-            Debug.Log("Hit!");
-        }
-        currentBullets--;
-        fireTimer = 0.0f;
-        //audioSource.PlayOneShot(shootSound); // shoot sound
-        //anim.CrossFadeInFixedTime("Fire", 0.01f); // fire animation
-        //muzzleFlash.Play();
+        _gunEffect.Play();
+        Fire(); //진짜 발사
+        _player.GetComponent<Animator>().SetTrigger("Shoot"); //반동 애니
+        _bullet--;
+        Invoke("ShootToIdleTrigger", 0.5f); //원래 상태로
+        NextFireTime = Time.time +_fireRate;
     }
+    void Fire()
+    {
+        RaycastHit Hit;
+        if(Physics.Raycast(_fpsCamera.transform.position, _fpsCamera.transform.forward, out Hit, _range))
+        {
+            EnemyHealth target = Hit.transform.GetComponent<EnemyHealth>();
+            if (target == null) return;
+            HitEffect(Hit); // 맞은 곳 반짝
+            target.TakeDamage(_damage);
+        }
+    }
+
+    void Aim()
+    {
+        if (!IsAiming)
+        {
+            IsAiming = true;
+            Debug.Log("Aiming");
+        }
+        else
+        {
+            Debug.Log("Stop Aiming");
+            IdleTrigger();
+        }
+        //뭘 해 야 할 까 ?
+    }
+
+    void Reload()
+    {
+            _player.GetComponent<Animator>().SetTrigger("Reload"); //장전 모션
+            int AddBullet = _maxBullet - _bullet;
+            if (AddBullet > _haveBullet)
+            {
+                _bullet += _haveBullet;
+                _haveBullet = 0;
+                return;
+            }
+            _haveBullet -= AddBullet;
+            _bullet += AddBullet;
+            Invoke("IdleTrigger", 2.4f); //원래 상태로
+    }
+
+    void HitEffect(RaycastHit hit)
+    {
+        GameObject Effect = Instantiate(_hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(Effect,0.5f);
+    }
+
+    void IdleTrigger()
+    {
+        _player.GetComponent<Animator>().SetTrigger("Idle");
+        IsReloading = false;
+        IsAiming = false;
+    }
+
+    void ShootToIdleTrigger()
+    {
+        _player.GetComponent<Animator>().SetTrigger("Idle");
+    }
+
 }
