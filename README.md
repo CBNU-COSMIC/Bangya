@@ -26,7 +26,7 @@ UI
 [3D Modern Menu UI](https://assetstore.unity.com/packages/tools/gui/3d-modern-menu-ui-116144)  
 [Crosshairs | 25+ Free Crosshairs Pack](https://assetstore.unity.com/packages/2d/gui/icons/crosshairs-25-free-crosshairs-pack-216732)
 
-캐릭터 및 몬스터
+캐릭터 및 몬스터  
 [Battle Royale Duo Polyart PBR](https://assetstore.unity.com/packages/3d/characters/humanoids/battle-royale-duo-polyart-pbr-185080)  
 [RPG Monster Duo PBR Polyart](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-duo-pbr-polyart-157762)  
 [RPG Monster Buddy PBR Polyart](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-buddy-pbr-polyart-253961)  
@@ -36,6 +36,8 @@ UI
 효과  
 
 ___  
-## 플레이 영상  
-<iframe width="576" height="360" src="https://www.youtube.com/embed/Zp87_WlkhWU" title="Bangya" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+## 플레이 영상(Play Video)  
+<img width="723" alt="image" src="https://github.com/CBNU-COSMIC/Bangya/assets/85085804/fe4838bb-2e2a-4143-aa9b-5be562ef6bf6">  
+
+https://www.youtube.com/watch?v=Zp87_WlkhWU
 ___   
