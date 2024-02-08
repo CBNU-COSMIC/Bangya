@@ -34,6 +34,7 @@ UI
 [Character Pack: Zombie Sample](https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/character-pack-zombie-sample-131604)  
 
 효과  
+[Magic Effects FREE](https://assetstore.unity.com/packages/vfx/particles/spells/magic-effects-free-247933)  
 
 ___  
 ## 플레이 영상(Play Video)  
