@@ -34,12 +34,12 @@ UI
 [Character Pack: Zombie Sample](https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/character-pack-zombie-sample-131604)  
 
 효과 및 음악  
-[Magic Effects FREE](https://assetstore.unity.com/packages/vfx/particles/spells/magic-effects-free-247933)
+[Magic Effects FREE](https://assetstore.unity.com/packages/vfx/particles/spells/magic-effects-free-247933)  
 [War FX](https://assetstore.unity.com/packages/vfx/particles/war-fx-5669 )  
-[총 발사 소리](https://freesound.org/people/pgi/sounds/212607/)
-[총 장전 소리](https://freesound.org/people/GFL7/sounds/276962/)
-[시작 화면 Bgm](https://pixabay.com/ko/music/sinister-night-halloween-trap-hip-hop-music-121202/)
-[메인 화면 Bgm](https://pixabay.com/ko/music/samurai-188212/)
+[총 발사 소리](https://freesound.org/people/pgi/sounds/212607/)  
+[총 장전 소리](https://freesound.org/people/GFL7/sounds/276962/)  
+[시작 화면 Bgm](https://pixabay.com/ko/music/sinister-night-halloween-trap-hip-hop-music-121202/)  
+[메인 화면 Bgm](https://pixabay.com/ko/music/samurai-188212/)  
 
 ___  
 ## 플레이 영상(Play Video)  
